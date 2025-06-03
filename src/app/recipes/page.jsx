@@ -31,49 +31,52 @@ export default async function RecipesPage({ searchParams }) {
     recipesData = await fetchRecipes(params);
   } catch (error) {
     return (
-      <p className="text-red-500 text-center mt-8 text-lg font-semibold">
-        Error loading recipes.
-      </p>
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <p className="text-amber-700 text-lg font-semibold text-center">
+          Error loading recipes.
+        </p>
+      </div>
     );
   }
 
   if (!recipesData.results.length) {
     return (
-      <p className="text-center mt-8 text-gray-600 text-lg italic">
-        No recipes found.
-      </p>
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <p className="text-gray-600 italic text-lg text-center">
+          No recipes found.
+        </p>
+      </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 md:p-8" style={{ color: "#5C3A00" }}>
-      <h1 className="text-4xl font-extrabold mb-8" style={{ color: "#D97706" }}>
-        Recipes
-      </h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {recipesData.results.map((recipe, index) => (
-          <Link
-            key={`${recipe.id}-${index}`}
-            href={`/recipes/${recipe.id}`}
-            className="block border rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-1"
-            style={{ borderColor: "#FCD34D", backgroundColor: "#FFF9DB" }}
-          >
-            <Image
-              src={recipe.image}
-              alt={recipe.title}
-              width={300}
-              height={200}
-              className="object-cover w-full h-48 transition-transform duration-300 ease-in-out hover:scale-105"
-            />
-            <h2
-              className="text-xl font-semibold p-4"
-              style={{ backgroundColor: "#FFFBEB", color: "#92400E" }}
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-10">
+      <div className="max-w-6xl w-full max-h-[90vh] p-6 md:p-10 my-8">
+        <p className="text-4xl font-extrabold text-amber-900 mb-16 text-centertext-amber-900 ">
+          Recipes
+        </p>
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {recipesData.results.map((recipe, index) => (
+            <Link
+              key={`${recipe.id}-${index}`}
+              href={`/recipes/${recipe.id}`}
+              className="group border rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
             >
-              {recipe.title}
-            </h2>
-          </Link>
-        ))}
+              <div className="p-4 flex flex-col items-center">
+                <Image
+                  src={recipe.image}
+                  alt={recipe.title}
+                  width={250}
+                  height={180}
+                  className="rounded-2xl shadow-md object-cover mb-4"
+                />
+                <p className="text-lg font-bold text-amber-900 group-hover:text-yellow-600 transition-colors duration-300 break-words text-center">
+                  {recipe.title}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ async function fetchRecipeDetails(id) {
 
   return res.json();
 }
+
 export default async function RecipeDetailsPage({ params }) {
   const resolvedParams = await params;
   const { id } = resolvedParams;
@@ -23,56 +24,57 @@ export default async function RecipeDetailsPage({ params }) {
     recipe = await fetchRecipeDetails(id);
   } catch (error) {
     return (
-      <p className="text-red-600 text-center mt-8 text-lg font-semibold">
-        Error loading recipe details.
-      </p>
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <p className="text-amber-700 text-lg font-semibold text-center">
+          Error loading recipe details.
+        </p>
+      </div>
     );
   }
 
   return (
-    <div
-      className="max-w-3xl mx-auto p-6 md:p-8 rounded-2xl shadow-xl"
-      style={{ backgroundColor: "#FFF9DB", color: "#5C3A00" }}
-    >
-      <h1 className="text-5xl font-extrabold mb-6" style={{ color: "#D97706" }}>
-        {recipe.title}
-      </h1>
-      <Image
-        src={recipe.image}
-        alt={recipe.title}
-        width={600}
-        height={400}
-        className="rounded-3xl mb-8 shadow-md"
-      />
-      <h2
-        className="text-3xl font-semibold mb-4 border-b-2 pb-2"
-        style={{ borderColor: "#F59E0B" }}
-      >
-        Ingredients
-      </h2>
-      <ul
-        className="list-disc pl-8 mb-8 space-y-2 text-lg"
-        style={{ color: "#7C4A00" }}
-      >
-        {recipe.extendedIngredients.map((ingredient) => (
-          <li
-            key={ingredient.id}
-            className="hover:text-yellow-600 transition-colors duration-200"
-          >
-            {ingredient.original}
-          </li>
-        ))}
-      </ul>
-      <div
-        className="text-lg space-y-2 font-medium"
-        style={{ color: "#5C3A00" }}
-      >
-        <p>
-          <strong>Preparation time:</strong> {recipe.readyInMinutes} minutes
+    <div className="min-h-screen flex items-center justify-center px-4 py-10">
+      <div className="max-w-5xl w-full rounded-3xl shadow-2xl text-amber-900 p-6 md:p-10 max-h-[90vh] overflow-auto">
+        <p className="text-lg md:text-2xl font-semibold mb-10 text-center break-words px-4">
+          {recipe.title}
         </p>
-        <p>
-          <strong>Servings:</strong> {recipe.servings}
-        </p>
+
+        <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-10 px-4">
+          <div className="flex-shrink-0 mx-auto md:mx-0 p-4rounded-xl shadow-sm">
+            <Image
+              src={recipe.image}
+              alt={recipe.title}
+              width={300}
+              height={220}
+              className="rounded-2xl shadow-md object-cover"
+            />
+          </div>
+
+          <div className="max-w-md flex flex-col justify-center space-y-6 p-4">
+            <p className="text-lg font-semibold text-center">Ingredients</p>
+            <ul className="list-disc pl-6 space-y-2 text-lg leading-relaxed break-words max-h-[300px] overflow-auto text-left">
+              {recipe.extendedIngredients.map((ingredient) => (
+                <li
+                  key={ingredient.id}
+                  className="hover:text-amber-700 transition-colors duration-200"
+                >
+                  {ingredient.original}
+                </li>
+              ))}
+            </ul>
+
+            <div className="text-lg space-y-2 font-medium text-amber-800 text-left">
+              <p>
+                <span className="font-semibold">Preparation time:</span>{" "}
+                {recipe.readyInMinutes} minutes
+              </p>
+              <p>
+                <span className="font-semibold">Servings:</span>{" "}
+                {recipe.servings}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
