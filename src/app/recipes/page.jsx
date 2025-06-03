@@ -1,9 +1,10 @@
-import React from "react";
-import RecipesList from "@/components/recipes-list/RecipesList";
-import { fetchRecipes } from "@/lib/fetchRecipes";
+import React from 'react';
+import RecipesList from '@/components/recipes-list/RecipesList';
+import { fetchRecipes } from '@/lib/fetchRecipes';
 
 export default async function RecipesPage({ searchParams }) {
-  const { query, cuisine, maxReadyTime } = searchParams;
+  const params = await searchParams;
+  const { query, cuisine, maxReadyTime } = params;
 
   let recipesData;
   try {
